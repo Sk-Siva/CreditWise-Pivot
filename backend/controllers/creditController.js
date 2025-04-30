@@ -44,7 +44,7 @@ exports.useCreditsForAction = (req, res) => {
           INSERT INTO credit_history (user_id, action, credits_changed, description)
           VALUES (?, ?, ?, ?)`;
         db.query(insertHistory, [userId, actionName, -creditCost, `Used for ${actionName}`]);
-        res.json({ message: `${creditCost} Credits have been reduced for the action.`, remaining: newCredits });
+        res.json({ message: `${creditCost} Credits have been reduced for the action ${actionName}`, remaining: newCredits });
       });
     });
   });

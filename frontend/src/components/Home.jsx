@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import FileUploader from './FileUploader';
 import RawCSVTable from './RawCSVTable';
 import PivotConfigurator from './PivotConfigurator';
@@ -158,6 +158,7 @@ function Home() {
               colFields={colFields}
               valFields={valFields}
               aggregateFuncs={aggregateFuncs}
+              doAction={doAction}
             />
           </div>
         </section>

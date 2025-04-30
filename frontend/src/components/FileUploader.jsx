@@ -30,7 +30,7 @@ const FileUploader = ({ setRawData, setHeaders, doAction }) => {
   }, [setRawData, setHeaders, doAction]);
 
   return (
-    <div className="fileInput">
+    <div>
       <input type="file" onChange={handleFileUpload} />
     </div>
   );

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../styles/styles.css';
 import { buildPivotData, formatHeader } from '../pivotLogic';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs }) => {
+const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs ,doAction}) => {
+  const tableRef = useRef(null);
   const { pivot, rowKeys, colKeys } = buildPivotData(rawData, rowFields, colFields, valFields, aggregateFuncs);
   const getKeyStr = (arr) => arr.map(k => k ?? 'Total').join('|');
 
@@ -298,14 +301,45 @@ const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs }
     );
   };
 
+  const handleDownloadPDF = () => {
+    if (!tableRef.current) return;
+
+    html2canvas(tableRef.current, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+      });
+
+      const imgWidth = 280;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+      pdf.save('pivot-table.pdf');
+    });
+    doAction('download_file');
+  };
+
+  const hasData = valFields.length > 0 || rowFields.length > 0 || colFields.length > 0;
+
   return (
     <div>
-      {(valFields.length > 0 || rowFields.length > 0 || colFields.length > 0) ? (
-        <div className='pivot-table-container'>
-          <table className="pivot-table">
-            {renderColHeaders()}
-            {renderBody()}
-          </table>
+      {hasData ? (
+        <div>
+          <div className='pivot-table-container'>
+            <table className="pivot-table" ref={tableRef}>
+              {renderColHeaders()}
+              {renderBody()}
+            </table>
+          </div>
+          <div className="download-buttons">
+            <button
+              className="download-btn"
+              onClick={handleDownloadPDF}
+            >
+              Download as PDF
+            </button>
+          </div>
         </div>
       ) : rawData.length > 0 ? (
         <div className="empty-state">
