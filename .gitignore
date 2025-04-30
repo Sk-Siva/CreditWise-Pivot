@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+.env
+.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# React
+*.env
+.cache/
+public/static/
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Optional
+coverage/
