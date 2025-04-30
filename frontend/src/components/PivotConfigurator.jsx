@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import '../styles/styles.css';
 
-const PivotConfigurator = ({ headers = [], pivotConfig, setPivotConfig, data = [], doAction }) => {
+const PivotConfigurator = ({ headers = [], pivotConfig, setPivotConfig, data = [],credits, doAction }) => {
   const { rowFields = [], colFields = [], valFields = [], aggregateFuncs = {} } = pivotConfig;
   const [previousSelectedFields, setPreviousSelectedFields] = useState([]);
   const [showPivotTable, setShowPivotTable] = useState(false);
@@ -172,7 +172,10 @@ const PivotConfigurator = ({ headers = [], pivotConfig, setPivotConfig, data = [
     const allSelectedFields = [...new Set([...rowFields, ...colFields, ...valFields])];
     
     const newFields = allSelectedFields.filter(field => !previousSelectedFields.includes(field));
-    
+    if (credits < (newFields.length * 2)){
+      alert ("Insufficient Credits ! Please Buy Credits to Continue")
+      return;
+    }
     if (newFields.length > 0) {
       doAction('select_field', newFields.length);
       setPreviousSelectedFields(allSelectedFields);

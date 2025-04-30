@@ -4,7 +4,7 @@ import { buildPivotData, formatHeader } from '../pivotLogic';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs ,doAction}) => {
+const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs, credits, doAction }) => {
   const tableRef = useRef(null);
   const { pivot, rowKeys, colKeys } = buildPivotData(rawData, rowFields, colFields, valFields, aggregateFuncs);
   const getKeyStr = (arr) => arr.map(k => k ?? 'Total').join('|');
@@ -302,6 +302,10 @@ const PivotTable = ({ rawData, rowFields, colFields, valFields, aggregateFuncs ,
   };
 
   const handleDownloadPDF = () => {
+    if (credits < 10){
+      alert ("Insufficient Credits ! Please Buy Credits to Continue")
+      return;
+    }
     if (!tableRef.current) return;
 
     html2canvas(tableRef.current, { scale: 2 }).then(canvas => {

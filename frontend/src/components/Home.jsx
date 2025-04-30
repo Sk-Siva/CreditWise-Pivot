@@ -120,7 +120,7 @@ function Home() {
       </div>
       
       <section className="file-uploader">
-        <FileUploader setRawData={setRawData} setHeaders={setHeaders} doAction={doAction} />
+        <FileUploader setRawData={setRawData} setHeaders={setHeaders} credits={credits} doAction={doAction} />
       </section>
 
       {rawData.length > 0 && (
@@ -142,6 +142,7 @@ function Home() {
               numericHeaders={numericHeaders}
               pivotConfig={pivotConfig}
               setPivotConfig={setPivotConfig}
+              credits={credits}
               doAction={doAction}
             />
           </div>
@@ -158,6 +159,7 @@ function Home() {
               colFields={colFields}
               valFields={valFields}
               aggregateFuncs={aggregateFuncs}
+              credits={credits}
               doAction={doAction}
             />
           </div>

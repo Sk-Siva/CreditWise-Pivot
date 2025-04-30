@@ -2,8 +2,12 @@ import React, { useCallback } from 'react';
 import Papa from 'papaparse';
 import '../styles/styles.css';
 
-const FileUploader = ({ setRawData, setHeaders, doAction }) => {
+const FileUploader = ({ setRawData, setHeaders,credits, doAction }) => {
   const handleFileUpload = useCallback((e) => {
+    if (credits <5){
+      alert ("Insufficient Credits ! Please Buy Credits to Continue")
+      return;
+    }
     const file = e.target.files?.[0];
     if (!file) return;
 
